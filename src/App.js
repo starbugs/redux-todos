@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodo, removeTodo } from './redux/todosSlice';
+import { addTodo, removeTodo, toggleTodo } from './redux/todosSlice';
 
 function App() {
   const [input, setInput] = useState('');
@@ -9,7 +9,7 @@ function App() {
 
   const handleAdd = () => {
     if (input.trim()) {
-      dispatch(addTodo({ id: Date.now(), text: input }));
+      dispatch(addTodo({ id: Date.now(), text: input, done: false }));
       setInput('');
     }
   };
@@ -25,6 +25,11 @@ function App() {
       <ul>
         {todos.map(todo => (
           <li key={todo.id}>
+            <input
+              type="checkbox"
+              checked={todo.done}
+              onChange={() => dispatch(toggleTodo(todo.id))}
+            />
             {todo.text}
             <button onClick={() => dispatch(removeTodo(todo.id))}>
               Remove
