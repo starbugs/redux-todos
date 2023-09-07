@@ -9,7 +9,15 @@ const todosSlice = createSlice({
     { id: uuidv4(), text: 'Add checkbox for marking todos as done' },
     { id: uuidv4(), text: 'Add completed counter' }
   ],
-  reducers: {}
+  reducers: {
+    addTodo: (state, action) => {
+      state.push(action.payload);
+    },
+    removeTodo: (state, action) => {
+      return state.filter(todo => todo.id !== action.payload);
+    }    
+  }
 });
 
+export const { addTodo, removeTodo } = todosSlice.actions;
 export default todosSlice.reducer;
