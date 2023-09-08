@@ -4,7 +4,7 @@ import { addTodo, removeTodo, toggleTodo } from './redux/todosSlice';
 
 function App() {
   const [input, setInput] = useState('');
-  const todos = useSelector(state => state.todos);
+  const todos = useSelector(state => state.todos.items);
   const dispatch = useDispatch();
 
   const handleAdd = () => {
