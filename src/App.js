@@ -5,6 +5,7 @@ import { addTodo, removeTodo, toggleTodo } from './redux/todosSlice';
 function App() {
   const [input, setInput] = useState('');
   const todos = useSelector(state => state.todos.items);
+  const completedCount = useSelector(state => state.todos.completedCount);
   const dispatch = useDispatch();
 
   const handleAdd = () => {
@@ -37,6 +38,10 @@ function App() {
           </li>
         ))}
       </ul>
+
+      <div>
+        Completed Todos: {completedCount}
+      </div>      
     </div>
   );
 }
