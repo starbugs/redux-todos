@@ -10,7 +10,8 @@ const todosSlice = createSlice({
       { id: uuidv4(), text: 'Add checkbox for marking todos as done', done: true },
       { id: uuidv4(), text: 'Add completed counter', done: false }
     ],
-    completedCount: 3
+    completedCount: 3,
+    filter: 'all'
   },
   reducers: {
     addTodo: (state, action) => {
@@ -29,9 +30,12 @@ const todosSlice = createSlice({
         todo.done = !todo.done;
         todo.done ? state.completedCount++ : state.completedCount--;
       }
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
     }
   }
 });
 
-export const { addTodo, removeTodo, toggleTodo } = todosSlice.actions;
+export const { addTodo, removeTodo, toggleTodo, setFilter } = todosSlice.actions;
 export default todosSlice.reducer;

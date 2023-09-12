@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodo, removeTodo, toggleTodo } from './redux/todosSlice';
+import { addTodo, removeTodo, toggleTodo, setFilter } from './redux/todosSlice';
 
 function App() {
   const [input, setInput] = useState('');
   const todos = useSelector(state => state.todos.items);
+  const filter = useSelector(state => state.todos.filter)
   const completedCount = useSelector(state => state.todos.completedCount);
   const dispatch = useDispatch();
 
@@ -15,6 +16,12 @@ function App() {
     }
   };
 
+  const filteredTodos = todos.filter(todo => {
+    if (filter === 'completed') return todo.done;
+    if (filter === 'incomplete') return !todo.done;
+    return true;  // for 'all'
+  });
+
   return (
     <div>
       <input
@@ -24,7 +31,7 @@ function App() {
       />
       <button onClick={handleAdd}>Add Todo</button>
       <ul>
-        {todos.map(todo => (
+        {filteredTodos.map(todo => (
           <li key={todo.id}>
             <input
               type="checkbox"
@@ -40,8 +47,14 @@ function App() {
       </ul>
 
       <div>
+        <button onClick={() => dispatch(setFilter('all'))}>All</button>
+        <button onClick={() => dispatch(setFilter('completed'))}>Completed</button>
+        <button onClick={() => dispatch(setFilter('incomplete'))}>Incomplete</button>
+      </div>
+
+      <div>
         Completed Todos: {completedCount}
-      </div>      
+      </div>
     </div>
   );
 }
